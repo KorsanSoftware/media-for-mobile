@@ -127,9 +127,7 @@ public class ComposerTranscodeCoreActivity extends ActivityWithTimeline implemen
 
         @Override
         public void onMediaProgress(float progress) {
-
             final float mediaProgress = progress;
-
             try {
                 runOnUiThread(new Runnable() {
                     @Override

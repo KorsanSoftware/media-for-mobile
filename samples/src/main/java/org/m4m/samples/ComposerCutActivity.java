@@ -40,30 +40,23 @@ public class ComposerCutActivity extends ActivityWithTimeline implements View.On
     }
 
     private void init() {
-        mItem = (TimelineItem) findViewById(R.id.timelineItem);
+        mItem = findViewById(R.id.timelineItem);
         mItem.setEventsListener(this);
         mItem.enableSegmentPicker(true);
-
-        ((Button) findViewById(R.id.action)).setOnClickListener(this);
+        findViewById(R.id.action).setOnClickListener(this);
     }
 
     public void action() {
         String mediaFileName = mItem.getMediaFileName();
-
         if (mediaFileName == null) {
             showToast("Please select a valid video file first.");
-
             return;
         }
-
         mItem.stopVideoView();
-
         int segmentFrom = mItem.getSegmentFrom();
         int segmentTo = mItem.getSegmentTo();
-
         Intent intent = new Intent();
         intent.setClass(this, ComposerCutCoreActivity.class);
-
         Bundle b = new Bundle();
         b.putString("srcMediaName1", mItem.getMediaFileName());
         intent.putExtras(b);

@@ -16,12 +16,21 @@
 
 package org.m4m.samples;
 
+import android.Manifest;
 import android.app.ExpandableListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
+
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 public class SamplesMainActivity extends ExpandableListActivity {
     private ExpandableSamplesListAdapter samplesListAdapter;
@@ -35,6 +44,22 @@ public class SamplesMainActivity extends ExpandableListActivity {
         samplesListAdapter = new ExpandableSamplesListAdapter(this);
 
         setListAdapter(samplesListAdapter);
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }).onSameThread().check();
     }
 
     @Override
